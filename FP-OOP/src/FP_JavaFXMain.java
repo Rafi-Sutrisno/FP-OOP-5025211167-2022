@@ -62,9 +62,11 @@ public class FP_JavaFXMain extends Application{
             try{
                 DataAc.GetArray(0);
                 for(int i = 0; i < DataAc.getSize(); i++){
-                System.out.println("Order " + (i+1) + " :" );
-                DataAc.GetArray(i).printInfo();
-                System.out.println();
+                    DataDeliv.GetArray(i).setbiayatotal();
+                    System.out.println("Order " + (i+1) + " :" );
+                    DataAc.GetArray(i).printInfo();
+                    DataDeliv.GetArray(i).printInfo();
+                    System.out.println();
                 }
             }catch(Exception e){
                 System.out.println("Tidak ada data");

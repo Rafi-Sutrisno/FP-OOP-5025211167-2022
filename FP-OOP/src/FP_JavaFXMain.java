@@ -28,7 +28,18 @@ public class FP_JavaFXMain extends Application{
     Stage window;
     Scene scene1;
     TableView<Fruit> table;
-    
+    ChoiceBox<String> fruitC;
+    ChoiceBox<Integer> weightC; 
+    TextField namaInput;
+    TextField alamatInput;
+    ChoiceBox<String> jarakC;
+    ChoiceBox<String> delivC;
+    TextField totalharga;
+    Integer TotalInt = 0;
+    String TotalString;
+    TextField totalberat;
+    Integer BeratInt = 0;
+    String BeratString;
     
     Data_ArrayList<Account> DataAc = new Data_ArrayList();
     Data_ArrayList<Abstract_Delivery> DataDeliv = new Data_ArrayList();
@@ -121,21 +132,21 @@ public class FP_JavaFXMain extends Application{
         //nama
         Label nama = new Label("Nama");
         GridPane.setConstraints(nama, 0, 2);
-        TextField namaInput = new TextField();
-        namaInput.setPromptText("name");
+        namaInput = new TextField();
+        namaInput.setPromptText("nama");
         GridPane.setConstraints(namaInput, 1, 2);
         
         //alamat
         Label alamat = new Label("Adress");
         GridPane.setConstraints(alamat, 0, 3);
-        TextField alamatInput = new TextField();
+        alamatInput = new TextField();
         alamatInput.setPromptText("alamat");
         GridPane.setConstraints(alamatInput, 1, 3);
         
         //jarak
         Label jarak = new Label("Perkiraan jarak");
         GridPane.setConstraints(jarak, 0, 4);
-        ChoiceBox<String> jarakC = new ChoiceBox<>();
+        jarakC = new ChoiceBox<>();
         jarakC.getItems().addAll("1-4 km", "5-8 km", "9-12 km", "12+ km");
         jarakC.setValue("1-4 km");
         GridPane.setConstraints(jarakC, 1, 4);
@@ -143,26 +154,28 @@ public class FP_JavaFXMain extends Application{
         //delivery
         Label pengiriman = new Label("Tipe Pengirimnan");
         GridPane.setConstraints(pengiriman, 0, 6);
-        ChoiceBox<String> pengirimanC = new ChoiceBox<>();
-        pengirimanC.getItems().addAll("Normal", "NextDay");
-        pengirimanC.setValue("Normal");
-        GridPane.setConstraints(pengirimanC, 1, 6);
+        delivC = new ChoiceBox<>();
+        delivC.getItems().addAll("Normal", "NextDay");
+        delivC.setValue("Normal");
+        GridPane.setConstraints(delivC, 1, 6);
         
         //fruit
         Label fruit = new Label("fruit:");
-        ChoiceBox<String> fruitC = new ChoiceBox<>();
+        fruitC = new ChoiceBox<>();
         fruitC.getItems().addAll("Apple", "Banana", "Manggo", "Orange", "Melon");
         fruitC.setValue("Apple");
         
         //weight
         Label weight = new Label("weight:");
-        ChoiceBox<Integer> weightC = new ChoiceBox<>();
+        weightC = new ChoiceBox<>();
         weightC.getItems().addAll(1, 2, 3, 4, 5);
         weightC.setValue(1);
         
         //add delete button
         Button addButton = new Button("Add");
+        addButton.setOnAction(event -> addButtonClicked());
         Button deleteButton = new Button("Delete");
+        deleteButton.setOnAction(event -> deleteButtonClicked());
         
         //table
         TableColumn<Fruit, String> nameColumn = new TableColumn<>("Name");
@@ -173,7 +186,7 @@ public class FP_JavaFXMain extends Application{
         weightColumn.setMinWidth(100);
         weightColumn.setCellValueFactory(new PropertyValueFactory<>("weight"));
         
-        TableColumn<Fruit, Integer> priceColumn = new TableColumn<>("Price");
+        TableColumn<Fruit, Integer> priceColumn = new TableColumn<>("Price per Kg");
         priceColumn.setMinWidth(100);
         priceColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
         
@@ -182,25 +195,56 @@ public class FP_JavaFXMain extends Application{
         totalColumn.setCellValueFactory(new PropertyValueFactory<>("total"));
         
         table = new TableView();
-        table.setItems(getFruit());
         table.getColumns().addAll(nameColumn, weightColumn, priceColumn, totalColumn);
         
-        HBox h1 = new HBox();
-        h1.setPadding(new Insets(10,10,10,10));
-        h1.setSpacing(10);
-        h1.getChildren().addAll(fruit, fruitC, weight, weightC, addButton,deleteButton);
+        Label total = new Label("Total Harga");
+        totalharga = new TextField();
+        TotalInt = getTotal();
+        TotalString = Integer.toString(TotalInt);
+        totalharga.setText(TotalString);
+        
+        Label Berat = new Label("Total Berat");
+        totalberat = new TextField();
+        BeratInt = getTotal();
+        BeratString = Integer.toString(BeratInt);
+        totalberat.setText(BeratString);
+        
+        HBox Boxtotal = new HBox();
+        Boxtotal.setAlignment(Pos.CENTER);
+        Boxtotal.setSpacing(5);
+        Boxtotal.getChildren().addAll(total, totalharga);
+        
+        HBox BoxtotalBerat = new HBox();
+        BoxtotalBerat.setAlignment(Pos.CENTER);
+        BoxtotalBerat.setSpacing(5);
+        BoxtotalBerat.getChildren().addAll(Berat, totalberat);
+        
+        VBox Berat_Harga = new VBox(10);
+        Berat_Harga.setAlignment(Pos.CENTER);
+        Berat_Harga.getChildren().addAll(Boxtotal, BoxtotalBerat);
+        
+        HBox BoxPilihBuah = new HBox();
+        BoxPilihBuah.setPadding(new Insets(10,10,10,10));
+        BoxPilihBuah.setSpacing(10);
+        BoxPilihBuah.getChildren().addAll(fruit, fruitC, weight, weightC, addButton,deleteButton);
         
         VBox v1 = new VBox();
-        v1.getChildren().addAll(h1, table);
+        v1.setMinWidth(400);
+        v1.getChildren().addAll(BoxPilihBuah, table);
+        
+        HBox BoxAllFruit = new HBox();
+        BoxAllFruit.setSpacing(10);
+        BoxAllFruit.getChildren().addAll(v1,Berat_Harga);
         
         //Buy Button
         Button buy = new Button("Beli");
         GridPane.setConstraints(buy, 3, 25);
         buy.setOnAction(event -> {
-            setData(namaInput, alamatInput, jarakC, pengirimanC);
-            //Data.get(0).printInfo();
-            //DataAc.GetArray(0).printInfo();
-            window.setScene(setScene1());
+            setData();
+            table.getItems().clear();
+            totalharga.setText("0");
+            totalberat.setText("0");
+            //window.setScene(setScene1());
         });
         
         //kembali
@@ -211,53 +255,108 @@ public class FP_JavaFXMain extends Application{
         });
         
         grid.getChildren().addAll(judul, penjelasan, nama, namaInput, alamat, alamatInput, jarak, jarakC, 
-                                    pengiriman, pengirimanC);
+                                    pengiriman, delivC);
         
         VBox vAll = new VBox(10);
-        vAll.getChildren().addAll(grid, v1, buy, kembali);
+        vAll.getChildren().addAll(grid, BoxAllFruit, buy, kembali);
         vAll.setPadding(new Insets(10,10,10,10));
         
         Scene scene = new Scene(vAll, 700, 540);
         return scene;
     } 
     
-    public void setData(TextField t1,TextField t2,ChoiceBox<String> c1, ChoiceBox<String> c2){
-        String nama = t1.getText();
-        String alamat = t2.getText();
+    public void setData(){
+        String nama = namaInput.getText();
+        String alamat = alamatInput.getText();
         
-        String jarak = c1.getValue();
+        String jarak = jarakC.getValue();
         if(jarak == "1-4 km") jarak = "4";
         else if(jarak == "5-8 km") jarak = "8";
         else if(jarak == "9-12 km") jarak = "12";
         else jarak = "15";
         int jarak_int = Integer.parseInt(jarak);
         
-        String deliv = c2.getValue();
+        String deliv = delivC.getValue();
         if(deliv == "Normal") {
             deliv = "10000";
             int deliv_int = Integer.parseInt(deliv);
-            DataDeliv.setArray(new Normal_Delivery(1, jarak_int, deliv_int));
+            DataDeliv.setArray(new Normal_Delivery(Integer.parseInt(totalberat.getText()), jarak_int, deliv_int));
         }
         else {
             deliv = "20000";
             int deliv_int = Integer.parseInt(deliv);
-            DataDeliv.setArray(new NextDay_Delivery(1, jarak_int, deliv_int));
+            DataDeliv.setArray(new NextDay_Delivery(Integer.parseInt(totalberat.getText()), jarak_int, deliv_int));
         }
-        DataAc.setArray(new Account(nama, alamat, jarak_int));
-        
+        DataAc.setArray(new Account(nama, alamat));
+        namaInput.clear();
+        alamatInput.clear();
     }
     
     public Data_ArrayList<Account> getData(){
         return DataAc;
     }
     
-    public ObservableList<Fruit> getFruit(){
-        ObservableList<Fruit> Fruits = FXCollections.observableArrayList();
-        Fruits.add(new Fruit("Watermelon", 10000, 3));
-        Fruits.add(new Fruit("Durian", 30000, 2));
-        return Fruits;
+    public void addButtonClicked(){
+        Fruit Fruit = new Fruit();
+        Fruit.setName(fruitC.getValue());
+        Fruit.setWeight(weightC.getValue());
+        if(fruitC.getValue() == "Apple"){
+            Fruit.setPrice(10000);
+            Fruit.setTotal(weightC.getValue()*10000);
+        }else if(fruitC.getValue() == "Banana"){
+            Fruit.setPrice(12000);
+            Fruit.setTotal(weightC.getValue()*12000);
+        }else if(fruitC.getValue() == "Manggo"){
+            Fruit.setPrice(9000);
+            Fruit.setTotal(weightC.getValue()*9000);
+        }else if(fruitC.getValue() == "Orange"){
+            Fruit.setPrice(13000);
+            Fruit.setTotal(weightC.getValue()*13000);
+        }else if(fruitC.getValue() == "Melon"){
+            Fruit.setPrice(14000);
+            Fruit.setTotal(weightC.getValue()*14000);
+        }
+        table.getItems().add(Fruit);
+        
+        TotalInt = getTotal();
+        TotalString = Integer.toString(TotalInt);
+        totalharga.setText(TotalString);
+        
+        BeratInt = getTotalBerat();
+        BeratString = Integer.toString(BeratInt);
+        totalberat.setText(BeratString);
     }
     
+    public void deleteButtonClicked(){
+        ObservableList<Fruit> FruitSelected, allFruit;
+        allFruit = table.getItems();
+        FruitSelected = table.getSelectionModel().getSelectedItems();
+        FruitSelected.forEach(allFruit::remove);
+        
+        TotalInt = getTotal();
+        TotalString = Integer.toString(TotalInt);
+        totalharga.setText(TotalString);
+        
+        BeratInt = getTotalBerat();
+        BeratString = Integer.toString(BeratInt);
+        totalberat.setText(BeratString);
+    }
+    
+    public int getTotal(){
+        TotalInt = 0;
+        for (Fruit item : table.getItems()) {
+            TotalInt = TotalInt + item.getTotal();
+        }
+        return TotalInt;
+    } 
+    
+    public int getTotalBerat(){
+        BeratInt = 0;
+        for (Fruit item : table.getItems()) {
+            BeratInt = BeratInt + item.getWeight();
+        }
+        return BeratInt;
+    } 
     
 }
 

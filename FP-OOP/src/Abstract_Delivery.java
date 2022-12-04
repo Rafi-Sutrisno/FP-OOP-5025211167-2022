@@ -3,17 +3,17 @@ abstract class Abstract_Delivery {
     
     public int berat;
     public int jarak;
-    private final int biayaperKM;
+    private final int biayaperKg;
     protected int biayaTotal;
     
-    public Abstract_Delivery(int berat, int jarak, int biayaperKM){
+    public Abstract_Delivery(int berat, int jarak, int biayaperKg){
         this.berat = berat;
         this.jarak = jarak;
-        this.biayaperKM = biayaperKM;
+        this.biayaperKg = biayaperKg;
     }
     
-    public int getBiayaperKM(){
-        return this.biayaperKM;
+    public int getBiayaperKg(){
+        return this.biayaperKg;
     }
     
     abstract public void setbiayatotal();

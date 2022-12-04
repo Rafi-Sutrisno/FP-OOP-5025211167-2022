@@ -4,10 +4,9 @@ public class Account implements InterfaceAccount{
     String alamat;
     int jarak;
 
-    public Account(String name, String alamat, int jarak){
+    public Account(String name, String alamat){
         this.nama = name;
         this.alamat = alamat;
-        this.jarak = jarak;
     }
     
     @Override
@@ -17,9 +16,8 @@ public class Account implements InterfaceAccount{
 
     @Override
     public void printInfo() {
-        System.out.println("Nama\t: " + this.nama);
-        System.out.println("Alamat\t: " + this.alamat);
-        System.out.println("Jarak\t: " + this.jarak);
+        System.out.println("Nama\t\t: " + this.nama);
+        System.out.println("Alamat\t\t: " + this.alamat);
     }
 
 }

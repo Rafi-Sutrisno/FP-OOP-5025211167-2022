@@ -4,6 +4,14 @@ public class Fruit {
     private int weight;
     private int price = 1;
     private int total;
+    
+    public Fruit(){
+        this.name = "";
+        this.price = 1;
+        this.weight = 1;
+        this.total = 1;
+    }
+    
     public Fruit(String name, int price, int weight){
         this.name = name;
         this.price = price;

@@ -1,4 +1,6 @@
 import javafx.application.Application;
+import javafx.collections.ObservableList;
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
@@ -8,7 +10,10 @@ import javafx.scene.Group;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.layout.StackPane;
@@ -22,7 +27,7 @@ public class FP_JavaFXMain extends Application{
     
     Stage window;
     Scene scene1;
-    
+    TableView<Fruit> table;
     
     
     Data_ArrayList<Account> DataAc = new Data_ArrayList();
@@ -35,7 +40,6 @@ public class FP_JavaFXMain extends Application{
     @Override
     public void start(Stage primaryStage) throws Exception {
         window = primaryStage;
-        
         window.setTitle("Buah");
         window.setScene(setScene1());
         window.show();
@@ -117,13 +121,15 @@ public class FP_JavaFXMain extends Application{
         //nama
         Label nama = new Label("Nama");
         GridPane.setConstraints(nama, 0, 2);
-        TextField namaInput = new TextField("a");
+        TextField namaInput = new TextField();
+        namaInput.setPromptText("name");
         GridPane.setConstraints(namaInput, 1, 2);
         
         //alamat
-        Label alamat = new Label("Alamat");
+        Label alamat = new Label("Adress");
         GridPane.setConstraints(alamat, 0, 3);
-        TextField alamatInput = new TextField("b");
+        TextField alamatInput = new TextField();
+        alamatInput.setPromptText("alamat");
         GridPane.setConstraints(alamatInput, 1, 3);
         
         //jarak
@@ -142,9 +148,54 @@ public class FP_JavaFXMain extends Application{
         pengirimanC.setValue("Normal");
         GridPane.setConstraints(pengirimanC, 1, 6);
         
+        //fruit
+        Label fruit = new Label("fruit:");
+        ChoiceBox<String> fruitC = new ChoiceBox<>();
+        fruitC.getItems().addAll("Apple", "Banana", "Manggo", "Orange", "Melon");
+        fruitC.setValue("Apple");
+        
+        //weight
+        Label weight = new Label("weight:");
+        ChoiceBox<Integer> weightC = new ChoiceBox<>();
+        weightC.getItems().addAll(1, 2, 3, 4, 5);
+        weightC.setValue(1);
+        
+        //add delete button
+        Button addButton = new Button("Add");
+        Button deleteButton = new Button("Delete");
+        
+        //table
+        TableColumn<Fruit, String> nameColumn = new TableColumn<>("Name");
+        nameColumn.setMinWidth(100);
+        nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
+        
+        TableColumn<Fruit, Integer> weightColumn = new TableColumn<>("Weight");
+        weightColumn.setMinWidth(100);
+        weightColumn.setCellValueFactory(new PropertyValueFactory<>("weight"));
+        
+        TableColumn<Fruit, Integer> priceColumn = new TableColumn<>("Price");
+        priceColumn.setMinWidth(100);
+        priceColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
+        
+        TableColumn<Fruit, Integer> totalColumn = new TableColumn<>("Total");
+        totalColumn.setMinWidth(100);
+        totalColumn.setCellValueFactory(new PropertyValueFactory<>("total"));
+        
+        table = new TableView();
+        table.setItems(getFruit());
+        table.getColumns().addAll(nameColumn, weightColumn, priceColumn, totalColumn);
+        
+        HBox h1 = new HBox();
+        h1.setPadding(new Insets(10,10,10,10));
+        h1.setSpacing(10);
+        h1.getChildren().addAll(fruit, fruitC, weight, weightC, addButton,deleteButton);
+        
+        VBox v1 = new VBox();
+        v1.getChildren().addAll(h1, table);
+        
         //Buy Button
         Button buy = new Button("Beli");
-        GridPane.setConstraints(buy, 3, 9);
+        GridPane.setConstraints(buy, 3, 25);
         buy.setOnAction(event -> {
             setData(namaInput, alamatInput, jarakC, pengirimanC);
             //Data.get(0).printInfo();
@@ -153,22 +204,20 @@ public class FP_JavaFXMain extends Application{
         });
         
         //kembali
-        Button button2 = new Button("kembali");
-        GridPane.setConstraints(button2, 3, 10);
-        button2.setOnAction (a -> {
+        Button kembali = new Button("kembali");
+        GridPane.setConstraints(kembali, 3, 27);
+        kembali.setOnAction (a -> {
             window.setScene(setScene1());
         });
         
-        Button pilih = new Button("Pilih Buah");
-        GridPane.setConstraints(pilih, 0, 5);
-        pilih.setOnAction(event ->{
-            int result = Pembelian.make("MARKET", "Mau pakai keranjang ?");
-            System.out.println("Berhasil Ditambahkan\nTotal : " + result);
-        });
+        grid.getChildren().addAll(judul, penjelasan, nama, namaInput, alamat, alamatInput, jarak, jarakC, 
+                                    pengiriman, pengirimanC);
         
-        grid.getChildren().addAll(judul, penjelasan, nama, namaInput, alamat, alamatInput, jarak, jarakC, pengiriman, pengirimanC, buy, button2);
+        VBox vAll = new VBox(10);
+        vAll.getChildren().addAll(grid, v1, buy, kembali);
+        vAll.setPadding(new Insets(10,10,10,10));
         
-        Scene scene = new Scene(grid, 700, 540);
+        Scene scene = new Scene(vAll, 700, 540);
         return scene;
     } 
     
@@ -201,6 +250,15 @@ public class FP_JavaFXMain extends Application{
     public Data_ArrayList<Account> getData(){
         return DataAc;
     }
+    
+    public ObservableList<Fruit> getFruit(){
+        ObservableList<Fruit> Fruits = FXCollections.observableArrayList();
+        Fruits.add(new Fruit("Watermelon", 10000, 3));
+        Fruits.add(new Fruit("Durian", 30000, 2));
+        return Fruits;
+    }
+    
+    
 }
 
 
@@ -214,5 +272,11 @@ public class FP_JavaFXMain extends Application{
         confbutton.setOnAction(eh -> {
             int result = Pembelian.make("MARKET", "Mau pakai keranjang ?");
             System.out.println("Berhasil Ditambahkan\nTotal : " + result);
+        });
+        Button pilih = new Button("Pilih Buah");
+            GridPane.setConstraints(pilih, 0, 5);
+            pilih.setOnAction(event ->{
+                int result = Pembelian.make("MARKET", "Mau pakai keranjang ?");
+                System.out.println("Berhasil Ditambahkan\nTotal : " + result);
         });
 */

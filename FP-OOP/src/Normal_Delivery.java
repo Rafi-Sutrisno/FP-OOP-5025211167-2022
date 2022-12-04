@@ -13,8 +13,8 @@ public class Normal_Delivery extends Abstract_Delivery{
     @Override
     public void printInfo() {
         System.out.println("Layanan\t: Normal");
-        System.out.println("Biaya Per Km\t: " + this.getBiayaperKM());
-        System.out.println("Biaya Total\t: " + this.biayaTotal);
+        System.out.println("Biaya Per Km\t: " + (this.getBiayaperKM()/1000) +"k");
+        System.out.println("Biaya Total\t: " + (this.biayaTotal/1000) +"k");
     }
 
 }

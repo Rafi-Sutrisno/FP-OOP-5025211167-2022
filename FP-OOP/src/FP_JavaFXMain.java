@@ -40,6 +40,7 @@ public class FP_JavaFXMain extends Application{
     TextField totalberat;
     Integer BeratInt = 0;
     String BeratString;
+    TextField Status;
     
     Data_ArrayList<Account> DataAc = new Data_ArrayList();
     Data_ArrayList<Abstract_Delivery> DataDeliv = new Data_ArrayList();
@@ -175,7 +176,13 @@ public class FP_JavaFXMain extends Application{
         Button addButton = new Button("Add");
         addButton.setOnAction(event -> addButtonClicked());
         Button deleteButton = new Button("Delete");
-        deleteButton.setOnAction(event -> deleteButtonClicked());
+        deleteButton.setOnAction(event -> {
+            try{
+                deleteButtonClicked();
+            }catch(Exception e){
+                
+            }
+        });
         
         //table
         TableColumn<Fruit, String> nameColumn = new TableColumn<>("Name");
@@ -240,10 +247,15 @@ public class FP_JavaFXMain extends Application{
         Button buy = new Button("Beli");
         GridPane.setConstraints(buy, 3, 25);
         buy.setOnAction(event -> {
-            setData();
-            table.getItems().clear();
-            totalharga.setText("0");
-            totalberat.setText("0");
+            if("".equals(namaInput.getText()) || "".equals(alamatInput.getText()) || "0".equals(totalharga.getText())){
+                Status.setText("Ada data yang kurang");
+            }else{
+                setData();
+                table.getItems().clear();
+                totalharga.setText("0");
+                totalberat.setText("0");
+                Status.setText("Data Berhasil Ditambahkan");
+            }
             //window.setScene(setScene1());
         });
         
@@ -254,11 +266,21 @@ public class FP_JavaFXMain extends Application{
             window.setScene(setScene1());
         });
         
+        Status = new TextField();
+        Status.setPrefHeight(50);
+        Status.setPrefWidth(170);
+        
+        VBox vbottom = new VBox(10);
+        HBox hbottom = new HBox(20);
+        
+        vbottom.getChildren().addAll(buy, kembali);
+        hbottom.getChildren().addAll(Status, vbottom);
+        
         grid.getChildren().addAll(judul, penjelasan, nama, namaInput, alamat, alamatInput, jarak, jarakC, 
                                     pengiriman, delivC);
         
         VBox vAll = new VBox(10);
-        vAll.getChildren().addAll(grid, BoxAllFruit, buy, kembali);
+        vAll.getChildren().addAll(grid, BoxAllFruit, hbottom);
         vAll.setPadding(new Insets(10,10,10,10));
         
         Scene scene = new Scene(vAll, 700, 540);

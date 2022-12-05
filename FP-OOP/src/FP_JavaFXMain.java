@@ -27,7 +27,9 @@ public class FP_JavaFXMain extends Application{
     
     Stage window;
     Scene scene1;
+    Scene scene_data;
     TableView<Fruit> table;
+    TableView<Daftar_Data> table_data;
     ChoiceBox<String> fruitC;
     ChoiceBox<Integer> weightC; 
     TextField namaInput;
@@ -41,6 +43,7 @@ public class FP_JavaFXMain extends Application{
     Integer BeratInt = 0;
     String BeratString;
     TextField Status;
+    Integer no_daftar = 1;
     
     Data_ArrayList<Account> DataAc = new Data_ArrayList();
     Data_ArrayList<Abstract_Delivery> DataDeliv = new Data_ArrayList();
@@ -52,6 +55,7 @@ public class FP_JavaFXMain extends Application{
     @Override
     public void start(Stage primaryStage) throws Exception {
         window = primaryStage;
+        table_data = new TableView();
         window.setTitle("Buah");
         window.setScene(setScene1());
         window.show();
@@ -75,6 +79,7 @@ public class FP_JavaFXMain extends Application{
             window.setScene(setScene2());
         });
         databutton.setOnAction (event -> { 
+            window.setScene(setScene3());
             try{
                 DataAc.GetArray(0);
                 for(int i = 0; i < DataAc.getSize(); i++){
@@ -287,9 +292,57 @@ public class FP_JavaFXMain extends Application{
         return scene;
     } 
     
+    public Scene setScene3(){
+        
+        //table
+        TableColumn<Daftar_Data, Integer> noColumn = new TableColumn<>("No");
+        noColumn.setMinWidth(30);
+        noColumn.setCellValueFactory(new PropertyValueFactory<>("no"));
+        
+        TableColumn<Daftar_Data, String> namaColumn = new TableColumn<>("Nama");
+        namaColumn.setMinWidth(100);
+        namaColumn.setCellValueFactory(new PropertyValueFactory<>("nama"));
+        
+        TableColumn<Daftar_Data, String> alamatColumn = new TableColumn<>("Alamat");
+        alamatColumn.setMinWidth(100);
+        alamatColumn.setCellValueFactory(new PropertyValueFactory<>("alamat"));
+        
+        TableColumn<Daftar_Data, String> layananColumn = new TableColumn<>("Layanan");
+        layananColumn.setMinWidth(100);
+        layananColumn.setCellValueFactory(new PropertyValueFactory<>("layanan"));
+        
+        TableColumn<Daftar_Data, Integer> biaya_buahColumn = new TableColumn<>("Biaya buah");
+        biaya_buahColumn.setMinWidth(100);
+        biaya_buahColumn.setCellValueFactory(new PropertyValueFactory<>("biaya_buah"));
+        
+        TableColumn<Daftar_Data, Integer> biaya_layananColumn = new TableColumn<>("Biaya layanan");
+        biaya_layananColumn.setMinWidth(100);
+        biaya_layananColumn.setCellValueFactory(new PropertyValueFactory<>("biaya_layanan"));
+        
+        TableColumn<Daftar_Data, Integer> biaya_totalColumn = new TableColumn<>("Biaya Total");
+        biaya_totalColumn.setMinWidth(100);
+        biaya_totalColumn.setCellValueFactory(new PropertyValueFactory<>("biaya_Total"));
+        
+        table_data.getColumns().addAll(noColumn, namaColumn, alamatColumn, layananColumn, biaya_buahColumn, biaya_layananColumn, biaya_totalColumn);
+        
+        //kembali
+        Button kembali = new Button("kembali");
+        kembali.setOnAction (a -> {
+            window.setScene(setScene1());
+        });
+        
+        VBox main = new VBox(20);
+        main.setPadding(new Insets(10,10,10,10));
+        main.setAlignment(Pos.CENTER);
+        main.getChildren().addAll(table_data, kembali);
+        scene_data = new Scene(main,700,500);
+        return scene_data;
+    }
+    
     public void setData(){
         String nama = namaInput.getText();
         String alamat = alamatInput.getText();
+        
         
         String jarak = jarakC.getValue();
         if(jarak == "1-4 km") jarak = "4";
@@ -299,19 +352,27 @@ public class FP_JavaFXMain extends Application{
         int jarak_int = Integer.parseInt(jarak);
         
         String deliv = delivC.getValue();
+        String layanan = deliv;
+        Integer biaya_layanan;
         if(deliv == "Normal") {
             deliv = "10000";
             int deliv_int = Integer.parseInt(deliv);
+            biaya_layanan = deliv_int;
             DataDeliv.setArray(new Normal_Delivery(Integer.parseInt(totalberat.getText()), jarak_int, deliv_int));
         }
         else {
             deliv = "20000";
             int deliv_int = Integer.parseInt(deliv);
+            biaya_layanan = deliv_int;
             DataDeliv.setArray(new NextDay_Delivery(Integer.parseInt(totalberat.getText()), jarak_int, deliv_int));
         }
-        DataAc.setArray(new Account(nama, alamat));
+        DataAc.setArray(new Account(nama, alamat, Integer.parseInt(totalharga.getText())));
         namaInput.clear();
         alamatInput.clear();
+        
+        Daftar_Data daftar = new Daftar_Data(no_daftar, nama, alamat, layanan, Integer.parseInt(totalharga.getText()), biaya_layanan);
+        table_data.getItems().add(daftar);
+        no_daftar++;
     }
     
     public Data_ArrayList<Account> getData(){

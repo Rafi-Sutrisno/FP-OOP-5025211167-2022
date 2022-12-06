@@ -55,7 +55,11 @@ public class FP_JavaFXMain extends Application{
     @Override
     public void start(Stage primaryStage) throws Exception {
         window = primaryStage;
+        
+        //table scene 3
         table_data = new TableView();
+        setTable_data();
+        
         window.setTitle("Buah");
         window.setScene(setScene1());
         window.show();
@@ -67,7 +71,7 @@ public class FP_JavaFXMain extends Application{
     }
     public Scene setScene1(){
         //scene 1
-        Label label1 = new Label("Toko Buah");
+        Label label1 = new Label("Data Toko Buah");
         label1.setScaleX(3);
         label1.setScaleY(3);
         Button button = new Button();
@@ -80,6 +84,7 @@ public class FP_JavaFXMain extends Application{
         });
         databutton.setOnAction (event -> { 
             window.setScene(setScene3());
+            
             try{
                 DataAc.GetArray(0);
                 for(int i = 0; i < DataAc.getSize(); i++){
@@ -133,7 +138,7 @@ public class FP_JavaFXMain extends Application{
         GridPane.setConstraints(judul, 0, 0);
         
         //penjelasan
-        Label penjelasan = new Label("Masukkan data diri");
+        Label penjelasan = new Label("Masukkan data Costumer");
         GridPane.setConstraints(penjelasan, 0, 1);
         //nama
         Label nama = new Label("Nama");
@@ -294,6 +299,23 @@ public class FP_JavaFXMain extends Application{
     
     public Scene setScene3(){
         
+        
+        
+        //kembali
+        Button kembali = new Button("kembali");
+        kembali.setOnAction (a -> {
+            window.setScene(setScene1());
+        });
+        
+        VBox main = new VBox(20);
+        main.setPadding(new Insets(10,10,10,10));
+        main.setAlignment(Pos.CENTER);
+        main.getChildren().addAll(table_data, kembali);
+        scene_data = new Scene(main,700,470);
+        return scene_data;
+    }
+    
+    public void setTable_data(){
         //table
         TableColumn<Daftar_Data, Integer> noColumn = new TableColumn<>("No");
         noColumn.setMinWidth(30);
@@ -324,20 +346,8 @@ public class FP_JavaFXMain extends Application{
         biaya_totalColumn.setCellValueFactory(new PropertyValueFactory<>("biaya_Total"));
         
         table_data.getColumns().addAll(noColumn, namaColumn, alamatColumn, layananColumn, biaya_buahColumn, biaya_layananColumn, biaya_totalColumn);
-        
-        //kembali
-        Button kembali = new Button("kembali");
-        kembali.setOnAction (a -> {
-            window.setScene(setScene1());
-        });
-        
-        VBox main = new VBox(20);
-        main.setPadding(new Insets(10,10,10,10));
-        main.setAlignment(Pos.CENTER);
-        main.getChildren().addAll(table_data, kembali);
-        scene_data = new Scene(main,700,500);
-        return scene_data;
     }
+    
     
     public void setData(){
         String nama = namaInput.getText();

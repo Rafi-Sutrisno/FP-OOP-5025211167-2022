@@ -1,3 +1,6 @@
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import javafx.application.Application;
 import javafx.collections.ObservableList;
 import javafx.collections.FXCollections;
@@ -24,6 +27,8 @@ import javafx.stage.Stage;
 import javafx.scene.paint.*;
 import javafx.scene.shape.*;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.Border;
 
 public class FP_JavaFXMain extends Application{
     
@@ -233,7 +238,6 @@ public class FP_JavaFXMain extends Application{
         
         //Buy Button
         Button buy = new Button("Beli");
-        GridPane.setConstraints(buy, 3, 25);
         buy.setOnAction(event -> {
             if("".equals(namaInput.getText()) || "".equals(alamatInput.getText()) || "0".equals(totalharga.getText())){
                 Status.setText("Ada data yang kurang");
@@ -266,6 +270,10 @@ public class FP_JavaFXMain extends Application{
         grid.getChildren().addAll(judul, penjelasan, nama, namaInput, alamat, alamatInput, jarak, jarakC, 
                                     pengiriman, delivC);
         
+        grid.setBorder(Border.stroke(Color.GREEN));
+        
+        BoxAllFruit.setBorder(Border.stroke(Color.GREEN));
+        
         VBox vAll = new VBox(10);
         vAll.getChildren().addAll(grid, BoxAllFruit, hbottom);
         vAll.setPadding(new Insets(10,10,10,10));
@@ -280,6 +288,23 @@ public class FP_JavaFXMain extends Application{
         
         //simpan data
         Button savedata = new Button("Simpan data");
+        savedata.setOnAction(event -> {
+            String data = "";
+            for(int i = 0; i < DataDaftar.getSize(); i++){
+                data = data.concat("Nama : "+DataDaftar.GetArray(i).getNama() + "\n");
+                data = data.concat("Alamat : "+DataDaftar.GetArray(i).getAlamat() + "\n");
+                data = data.concat("Layanan : "+DataDaftar.GetArray(i).getLayanan() + "\n");
+                data = data.concat("Biaya Buah : "+DataDaftar.GetArray(i).getBiaya_buah() + "\n");
+                data = data.concat("Biaya Layanan : "+DataDaftar.GetArray(i).getBiaya_layanan() + "\n\n");
+            }
+            try {
+                BufferedWriter writer = new BufferedWriter(new FileWriter("D:/NetBeans/File Hasil InputOuput/Data Penjualan.txt"));
+                writer.write(data);
+                writer.close();
+            } catch (IOException ex) {
+            
+            }
+        });
         
         //kembali
         Button kembali = new Button("kembali");
@@ -293,6 +318,7 @@ public class FP_JavaFXMain extends Application{
         main.setAlignment(Pos.CENTER);
         
         HBox Hdata = new HBox();
+        Hdata.getChildren().add(table_data);
         Hdata.setAlignment(Pos.CENTER);
         Hdata.setMinHeight(314);
         layanan_data = new TextArea();

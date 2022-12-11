@@ -1,5 +1,5 @@
 
-public class Daftar_Data {
+public class Daftar_Data implements Interface_Data{
     private Integer no;
     private String nama;
     private String alamat;
@@ -18,6 +18,7 @@ public class Daftar_Data {
         this.biaya_layanan = (biaya_layanan*berat*(jarak/2))/2;
     }
 
+    @Override
     public Integer getNo() {
         return no;
     }
@@ -26,6 +27,7 @@ public class Daftar_Data {
         this.no = no;
     }
 
+    @Override
     public String getNama() {
         return nama;
     }
@@ -34,6 +36,7 @@ public class Daftar_Data {
         this.nama = nama;
     }
 
+    @Override
     public String getAlamat() {
         return alamat;
     }
@@ -42,6 +45,7 @@ public class Daftar_Data {
         this.alamat = alamat;
     }
 
+    @Override
     public String getLayanan() {
         return layanan;
     }
@@ -50,6 +54,7 @@ public class Daftar_Data {
         this.layanan = layanan;
     }
 
+    @Override
     public Integer getBiaya_buah() {
         return biaya_buah;
     }
@@ -58,6 +63,7 @@ public class Daftar_Data {
         this.biaya_buah = biaya_buah;
     }
 
+    @Override
     public Integer getBiaya_layanan() {
         return biaya_layanan;
     }

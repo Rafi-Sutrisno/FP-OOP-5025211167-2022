@@ -88,14 +88,6 @@ public class FP_JavaFXMain extends Application{
         });
         databutton.setOnAction (event -> { 
             window.setScene(setScene3());
-            try{
-                for(int i = 0; i < NormalDeliv.getSize(); i++){
-                    NormalDeliv.GetArray(i).setbiayatotal();
-                    NormalDeliv.GetArray(i).printInfo();
-                }
-            }catch(Exception e){
-                System.out.println("Tidak ada data");
-            }
         });
             
         //root

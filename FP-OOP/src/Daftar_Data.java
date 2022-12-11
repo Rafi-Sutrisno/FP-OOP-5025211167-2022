@@ -6,16 +6,16 @@ public class Daftar_Data {
     private String layanan;
     private Integer biaya_buah;
     private Integer biaya_layanan;
-    private Integer biaya_Total;
+    private Integer berat;
+    private Integer jarak;
     
-    public Daftar_Data(Integer no, String nama, String alamat, String layanan, Integer biaya_buah, Integer biaya_layanan){
+    public Daftar_Data(Integer no, String nama, String alamat, String layanan, Integer biaya_buah, Integer biaya_layanan, Integer berat, Integer jarak){
         this.no = no;
         this.nama = nama;
         this.alamat = alamat;
         this.layanan = layanan;
         this.biaya_buah = biaya_buah;
-        this.biaya_layanan = biaya_layanan;
-        this.biaya_Total = biaya_buah+biaya_layanan;
+        this.biaya_layanan = (biaya_layanan*berat*(jarak/2))/2;
     }
 
     public Integer getNo() {
@@ -66,13 +66,5 @@ public class Daftar_Data {
         this.biaya_layanan = biaya_layanan;
     }
 
-    public Integer getBiaya_Total() {
-        return biaya_Total;
-    }
-
-    public void setBiaya_Total(Integer biaya_Total) {
-        this.biaya_Total = biaya_Total;
-    }
-    
-    
+     
 }

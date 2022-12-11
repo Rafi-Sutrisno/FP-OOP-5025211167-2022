@@ -9,9 +9,11 @@ import javafx.scene.Scene;
 import javafx.scene.Group;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
@@ -44,9 +46,14 @@ public class FP_JavaFXMain extends Application{
     String BeratString;
     TextField Status;
     Integer no_daftar = 1;
+    ComboBox<String> comboData;
+
+    TextField akun_data;
+    TextArea layanan_data;
     
-    Data_ArrayList<Account> DataAc = new Data_ArrayList();
-    Data_ArrayList<Abstract_Delivery> DataDeliv = new Data_ArrayList();
+    Data_ArrayList<Daftar_Data> DataDaftar = new Data_ArrayList();
+    Data_ArrayList<Normal_Delivery> NormalDeliv = new Data_ArrayList();
+    Data_ArrayList<NextDay_Delivery> NextDeliv = new Data_ArrayList();
     
     public static void main(String[] args) {
         launch(args);
@@ -65,10 +72,7 @@ public class FP_JavaFXMain extends Application{
         window.show();
     }
     
-    private void closeprogram(){
-        boolean result2 = ConfirmBox.make("Title", "Apakah anda yakin");
-            if(result2) window.close();
-    }
+    
     public Scene setScene1(){
         //scene 1
         Label label1 = new Label("Data Toko Buah");
@@ -84,41 +88,23 @@ public class FP_JavaFXMain extends Application{
         });
         databutton.setOnAction (event -> { 
             window.setScene(setScene3());
-            
             try{
-                DataAc.GetArray(0);
-                for(int i = 0; i < DataAc.getSize(); i++){
-                    DataDeliv.GetArray(i).setbiayatotal();
-                    System.out.println("Order " + (i+1) + " :" );
-                    DataAc.GetArray(i).printInfo();
-                    DataDeliv.GetArray(i).printInfo();
-                    System.out.println();
+                for(int i = 0; i < NormalDeliv.getSize(); i++){
+                    NormalDeliv.GetArray(i).setbiayatotal();
+                    NormalDeliv.GetArray(i).printInfo();
                 }
             }catch(Exception e){
                 System.out.println("Tidak ada data");
             }
         });
-        
-        //tombol keluar
-        /*
-        window.setOnCloseRequest(event -> {
-            event.consume();
-            closeprogram();
-        });
-        */
-        Button button4 = new Button("Keluar");
-        button4.setOnAction(e -> closeprogram());
-        
-        
+            
         //root
         //scene1
         VBox rooth = new VBox(20);
         rooth.getChildren().addAll(label1, button, databutton);
         rooth.setAlignment(Pos.CENTER);
         
-        
-        scene1 = new Scene(rooth, 700, 540, Color.AQUAMARINE);
-        
+        scene1 = new Scene(rooth, 700, 540, Color.LIGHTGREEN);
         return scene1;
     }
     
@@ -271,7 +257,6 @@ public class FP_JavaFXMain extends Application{
         
         //kembali
         Button kembali = new Button("kembali");
-        GridPane.setConstraints(kembali, 3, 27);
         kembali.setOnAction (a -> {
             window.setScene(setScene1());
         });
@@ -298,8 +283,11 @@ public class FP_JavaFXMain extends Application{
     } 
     
     public Scene setScene3(){
+        comboData = new ComboBox<>();
+        comboData.getItems().addAll("Data Costumer", "Data Layanan");
         
-        
+        //simpan data
+        Button savedata = new Button("Simpan data");
         
         //kembali
         Button kembali = new Button("kembali");
@@ -307,13 +295,57 @@ public class FP_JavaFXMain extends Application{
             window.setScene(setScene1());
         });
         
+        
         VBox main = new VBox(20);
         main.setPadding(new Insets(10,10,10,10));
         main.setAlignment(Pos.CENTER);
-        main.getChildren().addAll(table_data, kembali);
+        
+        HBox Hdata = new HBox();
+        Hdata.setAlignment(Pos.CENTER);
+        Hdata.setMinHeight(314);
+        layanan_data = new TextArea();
+        layanan_data.setPrefHeight(200);
+        layanan_data.setPrefWidth(200);
+        layanan_data.appendText("Normal Delivery" + "\n");
+        layanan_data.appendText("Jumlah Pemakaian : " + NormalDeliv.getSize() +"\n");
+        layanan_data.appendText("Total Pendapatan : " + Integer.toString(getJumlah_N()) +"\n\n");
+        layanan_data.appendText("Next Delivery" + "\n");
+        layanan_data.appendText("Jumlah Pemakaian : " + NextDeliv.getSize() +"\n");
+        layanan_data.appendText("Total Pendapatan : " + Integer.toString(getJumlah_Ne()) +"\n");
+        
+        comboData.setOnAction(event -> {
+            Hdata.getChildren().clear();
+            if(comboData.getValue()=="Data Costumer"){
+                Hdata.getChildren().add(table_data);
+            }else{
+                Hdata.getChildren().add(layanan_data);
+            }
+        
+        });
+        
+        main.getChildren().addAll(comboData, Hdata, savedata, kembali);
         scene_data = new Scene(main,700,470);
         return scene_data;
     }
+    
+    
+    public Integer getJumlah_N(){
+        Integer jumlah = 0;
+        for(int i = 0; i < NormalDeliv.getSize(); i++){
+            NormalDeliv.GetArray(i).setbiayatotal();
+            jumlah += NormalDeliv.GetArray(i).biayaTotal;
+        }
+        return jumlah;
+    }
+    public Integer getJumlah_Ne(){
+        Integer jumlah = 0;
+        for(int i = 0; i < NextDeliv.getSize(); i++){
+            NextDeliv.GetArray(i).setbiayatotal();
+            jumlah += NextDeliv.GetArray(i).biayaTotal;
+        }
+        return jumlah;
+    }
+    
     
     public void setTable_data(){
         //table
@@ -322,37 +354,33 @@ public class FP_JavaFXMain extends Application{
         noColumn.setCellValueFactory(new PropertyValueFactory<>("no"));
         
         TableColumn<Daftar_Data, String> namaColumn = new TableColumn<>("Nama");
-        namaColumn.setMinWidth(100);
+        namaColumn.setMinWidth(120);
         namaColumn.setCellValueFactory(new PropertyValueFactory<>("nama"));
         
         TableColumn<Daftar_Data, String> alamatColumn = new TableColumn<>("Alamat");
-        alamatColumn.setMinWidth(100);
+        alamatColumn.setMinWidth(120);
         alamatColumn.setCellValueFactory(new PropertyValueFactory<>("alamat"));
         
         TableColumn<Daftar_Data, String> layananColumn = new TableColumn<>("Layanan");
-        layananColumn.setMinWidth(100);
+        layananColumn.setMinWidth(120);
         layananColumn.setCellValueFactory(new PropertyValueFactory<>("layanan"));
         
         TableColumn<Daftar_Data, Integer> biaya_buahColumn = new TableColumn<>("Biaya buah");
-        biaya_buahColumn.setMinWidth(100);
+        biaya_buahColumn.setMinWidth(120);
         biaya_buahColumn.setCellValueFactory(new PropertyValueFactory<>("biaya_buah"));
         
         TableColumn<Daftar_Data, Integer> biaya_layananColumn = new TableColumn<>("Biaya layanan");
-        biaya_layananColumn.setMinWidth(100);
+        biaya_layananColumn.setMinWidth(120);
         biaya_layananColumn.setCellValueFactory(new PropertyValueFactory<>("biaya_layanan"));
         
-        TableColumn<Daftar_Data, Integer> biaya_totalColumn = new TableColumn<>("Biaya Total");
-        biaya_totalColumn.setMinWidth(100);
-        biaya_totalColumn.setCellValueFactory(new PropertyValueFactory<>("biaya_Total"));
         
-        table_data.getColumns().addAll(noColumn, namaColumn, alamatColumn, layananColumn, biaya_buahColumn, biaya_layananColumn, biaya_totalColumn);
+        table_data.getColumns().addAll(noColumn, namaColumn, alamatColumn, layananColumn, biaya_buahColumn, biaya_layananColumn);
     }
     
     
     public void setData(){
         String nama = namaInput.getText();
         String alamat = alamatInput.getText();
-        
         
         String jarak = jarakC.getValue();
         if(jarak == "1-4 km") jarak = "4";
@@ -368,26 +396,25 @@ public class FP_JavaFXMain extends Application{
             deliv = "10000";
             int deliv_int = Integer.parseInt(deliv);
             biaya_layanan = deliv_int;
-            DataDeliv.setArray(new Normal_Delivery(Integer.parseInt(totalberat.getText()), jarak_int, deliv_int));
+            NormalDeliv.setArray(new Normal_Delivery(Integer.parseInt(totalberat.getText()), jarak_int, deliv_int));
         }
         else {
             deliv = "20000";
             int deliv_int = Integer.parseInt(deliv);
             biaya_layanan = deliv_int;
-            DataDeliv.setArray(new NextDay_Delivery(Integer.parseInt(totalberat.getText()), jarak_int, deliv_int));
+            NextDeliv.setArray(new NextDay_Delivery(Integer.parseInt(totalberat.getText()), jarak_int, deliv_int));
         }
-        DataAc.setArray(new Account(nama, alamat, Integer.parseInt(totalharga.getText())));
+        
         namaInput.clear();
         alamatInput.clear();
         
-        Daftar_Data daftar = new Daftar_Data(no_daftar, nama, alamat, layanan, Integer.parseInt(totalharga.getText()), biaya_layanan);
+        Daftar_Data daftar = new Daftar_Data(no_daftar, nama, alamat, layanan, Integer.parseInt(totalharga.getText()), biaya_layanan, Integer.parseInt(totalberat.getText()),Integer.parseInt(jarak));
+        DataDaftar.setArray(new Daftar_Data(no_daftar, nama, alamat, layanan, Integer.parseInt(totalharga.getText()), biaya_layanan, Integer.parseInt(totalberat.getText()), Integer.parseInt(jarak)));
         table_data.getItems().add(daftar);
         no_daftar++;
     }
     
-    public Data_ArrayList<Account> getData(){
-        return DataAc;
-    }
+    
     
     public void addButtonClicked(){
         Fruit Fruit = new Fruit();

@@ -7,7 +7,7 @@ public class Normal_Delivery extends Abstract_Delivery{
     
     @Override
     public void setbiayatotal() {
-        this.biayaTotal = this.jarak*this.berat*super.getBiayaperKg();
+        this.biayaTotal = ((this.jarak/2)*this.berat*this.getBiayaperKg())/2;
     }
     
     @Override

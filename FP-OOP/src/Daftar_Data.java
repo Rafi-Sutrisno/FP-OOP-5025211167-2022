@@ -1,4 +1,7 @@
 
+import java.util.HashMap;
+
+
 public class Daftar_Data implements Interface_Data{
     private Integer no;
     private String nama;
@@ -9,10 +12,13 @@ public class Daftar_Data implements Interface_Data{
     private Integer berat;
     private Integer jarak;
     
+    HashMap<Integer, String> Nama_Alamat = new HashMap<>();
+    
     public Daftar_Data(Integer no, String nama, String alamat, String layanan, Integer biaya_buah, Integer biaya_layanan, Integer berat, Integer jarak){
         this.no = no;
         this.nama = nama;
         this.alamat = alamat;
+        Nama_Alamat.put(no, nama);
         this.layanan = layanan;
         this.biaya_buah = biaya_buah;
         this.biaya_layanan = (biaya_layanan*berat*(jarak/2))/2;

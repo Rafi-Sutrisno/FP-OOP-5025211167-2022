@@ -1,6 +1,8 @@
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.HashSet;
 import javafx.application.Application;
 import javafx.collections.ObservableList;
 import javafx.collections.FXCollections;
@@ -25,10 +27,10 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import javafx.scene.paint.*;
-import javafx.scene.shape.*;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.Background;
 import javafx.scene.layout.Border;
+
+
 
 public class FP_JavaFXMain extends Application{
     
@@ -51,14 +53,16 @@ public class FP_JavaFXMain extends Application{
     String BeratString;
     TextField Status;
     Integer no_daftar = 1;
+    Integer no_simpan = 1;
     ComboBox<String> comboData;
 
-    TextField akun_data;
     TextArea layanan_data;
     
     Data_ArrayList<Daftar_Data> DataDaftar = new Data_ArrayList();
     Data_ArrayList<Normal_Delivery> NormalDeliv = new Data_ArrayList();
     Data_ArrayList<NextDay_Delivery> NextDeliv = new Data_ArrayList();
+    
+    HashMap<Integer, String> Simpan_Data = new HashMap<>();
     
     public static void main(String[] args) {
         launch(args);
@@ -273,6 +277,7 @@ public class FP_JavaFXMain extends Application{
         grid.setBorder(Border.stroke(Color.GREEN));
         
         BoxAllFruit.setBorder(Border.stroke(Color.GREEN));
+        BoxAllFruit.setPadding(new Insets(0,0,10,10));
         
         VBox vAll = new VBox(10);
         vAll.getChildren().addAll(grid, BoxAllFruit, hbottom);
@@ -289,21 +294,7 @@ public class FP_JavaFXMain extends Application{
         //simpan data
         Button savedata = new Button("Simpan data");
         savedata.setOnAction(event -> {
-            String data = "";
-            for(int i = 0; i < DataDaftar.getSize(); i++){
-                data = data.concat("Nama : "+DataDaftar.GetArray(i).getNama() + "\n");
-                data = data.concat("Alamat : "+DataDaftar.GetArray(i).getAlamat() + "\n");
-                data = data.concat("Layanan : "+DataDaftar.GetArray(i).getLayanan() + "\n");
-                data = data.concat("Biaya Buah : "+DataDaftar.GetArray(i).getBiaya_buah() + "\n");
-                data = data.concat("Biaya Layanan : "+DataDaftar.GetArray(i).getBiaya_layanan() + "\n\n");
-            }
-            try {
-                BufferedWriter writer = new BufferedWriter(new FileWriter("D:/NetBeans/File Hasil InputOuput/Data Penjualan.txt"));
-                writer.write(data);
-                writer.close();
-            } catch (IOException ex) {
-            
-            }
+            setSimpan();
         });
         
         //kembali
@@ -326,10 +317,10 @@ public class FP_JavaFXMain extends Application{
         layanan_data.setPrefWidth(200);
         layanan_data.appendText("Normal Delivery" + "\n");
         layanan_data.appendText("Jumlah Pemakaian : " + NormalDeliv.getSize() +"\n");
-        layanan_data.appendText("Total Pendapatan : " + Integer.toString(getJumlah_N()) +"\n\n");
+        layanan_data.appendText("Total Pendapatan : " + Integer.toString(getJumlahBiaya_Normal()) +"\n\n");
         layanan_data.appendText("Next Delivery" + "\n");
         layanan_data.appendText("Jumlah Pemakaian : " + NextDeliv.getSize() +"\n");
-        layanan_data.appendText("Total Pendapatan : " + Integer.toString(getJumlah_Ne()) +"\n");
+        layanan_data.appendText("Total Pendapatan : " + Integer.toString(getJumlahBiaya_Next()) +"\n");
         
         comboData.setOnAction(event -> {
             Hdata.getChildren().clear();
@@ -347,7 +338,7 @@ public class FP_JavaFXMain extends Application{
     }
     
     
-    public Integer getJumlah_N(){
+    public Integer getJumlahBiaya_Normal(){
         Integer jumlah = 0;
         for(int i = 0; i < NormalDeliv.getSize(); i++){
             NormalDeliv.GetArray(i).setbiayatotal();
@@ -355,7 +346,7 @@ public class FP_JavaFXMain extends Application{
         }
         return jumlah;
     }
-    public Integer getJumlah_Ne(){
+    public Integer getJumlahBiaya_Next(){
         Integer jumlah = 0;
         for(int i = 0; i < NextDeliv.getSize(); i++){
             NextDeliv.GetArray(i).setbiayatotal();
@@ -364,6 +355,31 @@ public class FP_JavaFXMain extends Application{
         return jumlah;
     }
     
+    public void setSimpan(){
+        String file = "D:/NetBeans/File Hasil InputOuput/Data Penjualan";
+        Simpan_Data.put(no_simpan, file);
+            String FileBaru = Simpan_Data.get(no_simpan) + " " +Integer.toString(no_simpan) + ".txt";
+            String data = "";
+            for(int i = 0; i < DataDaftar.getSize(); i++){
+                data = data.concat("Nama : "+DataDaftar.GetArray(i).getNama() + "\n");
+                data = data.concat("Alamat : "+DataDaftar.GetArray(i).getAlamat() + "\n");
+                data = data.concat("Layanan : "+DataDaftar.GetArray(i).getLayanan() + "\n");
+                data = data.concat("Biaya Buah : "+DataDaftar.GetArray(i).getBiaya_buah() + "\n");
+                data = data.concat("Biaya Layanan : "+DataDaftar.GetArray(i).getBiaya_layanan() + "\n\n");
+            }
+            try {
+                BufferedWriter writer = new BufferedWriter(new FileWriter(FileBaru));
+                writer.write(data);
+                writer.close();
+            } catch (IOException ex) {
+            
+            }
+            no_simpan++;
+            table_data.getItems().clear();
+            DataDaftar.clear();
+            NormalDeliv.clear();
+            NextDeliv.clear();
+    }
     
     public void setTable_data(){
         //table

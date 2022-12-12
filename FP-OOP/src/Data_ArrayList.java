@@ -14,4 +14,8 @@ public class Data_ArrayList<Type> {
     public int getSize(){
         return array.size();
     }
+    
+    public void clear(){
+        array.clear();
+    }
 }

@@ -13,47 +13,47 @@ Referensi : https://www.youtube.com/watch?v=uz2sWCnTq6E&list=PL6gx4Cwl9DGBzfXLWL
 
 ## Penerapan Aspek OOP
 
-1.Casting/Conversion
+1.Casting/Conversion ->
 Lokasi File : FP_JavaFXMain.java
 
-2.Constructor
+2.Constructor ->
 Lokasi File : Daftar_Data.java , Normal_Delivery.java , Next_Delivery.java, dan Fruit.java
 
-3.Overloading
+3.Overloading -> ->
 Lokasi File : Fruit.java
 
-4.Overriding
+4.Overriding ->
 Lokasi File : Daftar_Data.java , Normal_Delivery.java , dan Next_Delivery.java
 
-5.Encapsulation
+5.Encapsulation ->
 Lokasi File : Daftar_Data.java , dan Fruit.java
 
-6.Inheritance
+6.Inheritance ->
 Lokasi File : Daftar_Data.java , Normal_Delivery.java , dan Next_Delivery.java
 
-7.Polymorphism
+7.Polymorphism ->
 Lokasi File : FP_JavaFXMain.java , Normal_Delivery.java , dan Next_Delivery.java
 
-8.ArrayList
+8.ArrayList ->
 Lokasi File : Data_ArrayList.java
 
-9.Exception Handling
+9.Exception Handling ->
 Lokasi File : FP_JavaFXMain.java
 
-10.GUI
+10.GUI ->
 Lokasi File : FP_JavaFXMain.java
 
-11.Interface
+11.Interface ->
 Lokasi File : Interface_Data.java
 
-12.Abstract Class
+12.Abstract Class ->
 Lokasi File : Abstract_Delivery.java
 
-13.Generics
+13.Generics ->
 Lokasi File : Data_ArrayList.java
 
-14.Collection
+14.Collection ->
 Lokasi File : FP_JavaFXMain.java
 
-15.Input Output
+15.Input Output ->
 Lokasi File : FP_JavaFXMain.java

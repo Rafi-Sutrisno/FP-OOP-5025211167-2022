@@ -14,7 +14,6 @@ Referensi : https://www.youtube.com/watch?v=uz2sWCnTq6E&list=PL6gx4Cwl9DGBzfXLWL
 ## Penerapan Aspek OOP
 
 1.Casting/Conversion
-
 Lokasi File : FP_JavaFXMain.java
 
 2.Constructor

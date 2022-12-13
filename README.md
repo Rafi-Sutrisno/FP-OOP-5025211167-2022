@@ -17,6 +17,7 @@ Referensi : https://www.youtube.com/watch?v=uz2sWCnTq6E&list=PL6gx4Cwl9DGBzfXLWL
 
 1.Casting/Conversion ->
 Lokasi File : FP_JavaFXMain.java
+contohnya pada line 320, 323, 361, 425, 434, 440
 
 2.Constructor ->
 Lokasi File : Daftar_Data.java , Normal_Delivery.java , Next_Delivery.java, dan Fruit.java
@@ -41,6 +42,7 @@ Lokasi File : Data_ArrayList.java
 
 9.Exception Handling ->
 Lokasi File : FP_JavaFXMain.java
+contohnya pada line 370
 
 10.GUI ->
 Lokasi File : FP_JavaFXMain.java
@@ -59,3 +61,4 @@ Lokasi File : FP_JavaFXMain.java
 
 15.Input Output ->
 Lokasi File : FP_JavaFXMain.java
+Pada line 371

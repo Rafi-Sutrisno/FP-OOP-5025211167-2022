@@ -18,47 +18,62 @@ Referensi : https://www.youtube.com/watch?v=uz2sWCnTq6E&list=PL6gx4Cwl9DGBzfXLWL
 1.Casting/Conversion ->
 Lokasi File : FP_JavaFXMain.java
 contohnya pada line 320, 323, 361, 425, 434, 440
+https://github.com/Rafi-Sutrisno/FP-OOP-5025211167-2022/blob/9d8785f950113ae662af41b4d6ed4603a16bb975/FP-OOP/src/FP_JavaFXMain.java#L431-L433
+
 
 2.Constructor ->
 Lokasi File : Daftar_Data.java , Normal_Delivery.java , Next_Delivery.java, dan Fruit.java
+https://github.com/Rafi-Sutrisno/FP-OOP-5025211167-2022/blob/9d8785f950113ae662af41b4d6ed4603a16bb975/FP-OOP/src/Fruit.java#L15-L20
 
-3.Overloading -> ->
+
+3.Overloading ->
 Lokasi File : Fruit.java
+https://github.com/Rafi-Sutrisno/FP-OOP-5025211167-2022/blob/9d8785f950113ae662af41b4d6ed4603a16bb975/FP-OOP/src/Fruit.java#L8-L20
 
 4.Overriding ->
 Lokasi File : Daftar_Data.java , Normal_Delivery.java , dan Next_Delivery.java
+https://github.com/Rafi-Sutrisno/FP-OOP-5025211167-2022/blob/9d8785f950113ae662af41b4d6ed4603a16bb975/FP-OOP/src/NextDay_Delivery.java#L8-L11
 
 5.Encapsulation ->
 Lokasi File : Daftar_Data.java , dan Fruit.java
+https://github.com/Rafi-Sutrisno/FP-OOP-5025211167-2022/blob/9d8785f950113ae662af41b4d6ed4603a16bb975/FP-OOP/src/Fruit.java#L22-L28
 
 6.Inheritance ->
 Lokasi File : Daftar_Data.java , Normal_Delivery.java , dan Next_Delivery.java
+https://github.com/Rafi-Sutrisno/FP-OOP-5025211167-2022/blob/9d8785f950113ae662af41b4d6ed4603a16bb975/FP-OOP/src/NextDay_Delivery.java#L2-L6
 
 7.Polymorphism ->
 Lokasi File : FP_JavaFXMain.java , Normal_Delivery.java , dan Next_Delivery.java
 
 8.ArrayList ->
 Lokasi File : Data_ArrayList.java
+https://github.com/Rafi-Sutrisno/FP-OOP-5025211167-2022/blob/9d8785f950113ae662af41b4d6ed4603a16bb975/FP-OOP/src/Data_ArrayList.java#L1-L4
 
 9.Exception Handling ->
 Lokasi File : FP_JavaFXMain.java
 contohnya pada line 370
+https://github.com/Rafi-Sutrisno/FP-OOP-5025211167-2022/blob/9d8785f950113ae662af41b4d6ed4603a16bb975/FP-OOP/src/FP_JavaFXMain.java#L370-L376
 
 10.GUI ->
 Lokasi File : FP_JavaFXMain.java
 
 11.Interface ->
 Lokasi File : Interface_Data.java
+https://github.com/Rafi-Sutrisno/FP-OOP-5025211167-2022/blob/9d8785f950113ae662af41b4d6ed4603a16bb975/FP-OOP/src/Interface_Data.java#L2-L15
 
 12.Abstract Class ->
 Lokasi File : Abstract_Delivery.java
+https://github.com/Rafi-Sutrisno/FP-OOP-5025211167-2022/blob/9d8785f950113ae662af41b4d6ed4603a16bb975/FP-OOP/src/Abstract_Delivery.java#L2-L13
 
 13.Generics ->
 Lokasi File : Data_ArrayList.java
+https://github.com/Rafi-Sutrisno/FP-OOP-5025211167-2022/blob/9d8785f950113ae662af41b4d6ed4603a16bb975/FP-OOP/src/Data_ArrayList.java#L3-L8
 
 14.Collection ->
 Lokasi File : FP_JavaFXMain.java
+https://github.com/Rafi-Sutrisno/FP-OOP-5025211167-2022/blob/9d8785f950113ae662af41b4d6ed4603a16bb975/FP-OOP/src/FP_JavaFXMain.java#L65
 
 15.Input Output ->
 Lokasi File : FP_JavaFXMain.java
 Pada line 371
+https://github.com/Rafi-Sutrisno/FP-OOP-5025211167-2022/blob/9d8785f950113ae662af41b4d6ed4603a16bb975/FP-OOP/src/FP_JavaFXMain.java#L371-L373

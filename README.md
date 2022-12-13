@@ -57,6 +57,7 @@ https://github.com/Rafi-Sutrisno/FP-OOP-5025211167-2022/blob/9d8785f950113ae662a
 
 10.GUI ->
 Lokasi File : FP_JavaFXMain.java
+https://github.com/Rafi-Sutrisno/FP-OOP-5025211167-2022/blob/ee6d2d9ead45e00c913827fccb7f8b4ada8e2ad5/FP-OOP/src/FP_JavaFXMain.java#L37-L48
 
 11.Interface ->
 Lokasi File : Interface_Data.java

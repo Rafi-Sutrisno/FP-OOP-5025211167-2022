@@ -7,8 +7,10 @@
 
 Final Project saya adalah sebuah sistem simpan data jual beli toko sayur. Pada sistem tersebut yang dimasukkan adalah nama pembeli, tipe sayur apa yang ingin dibeli, berapa jumlahnya, alamat pengiriman, detail alamat dan tipe pengiriman. Setiap tipe pengiriman memiliki harga yang berbeda. Pembeli bisa membeli lebih dari satu sayur. Lalu sistem akan menghitung total harganya. Selanjutnya data semua transaksi akan disimpan dalam bentuk tabel.
 
+Link Youtube Demo : https://youtu.be/P4jakUEKV-s
 
-Referensi : https://www.youtube.com/watch?v=uz2sWCnTq6E&list=PL6gx4Cwl9DGBzfXLWLSYVy8EbTdpGbUIG&index=20
+Referensi : 1) https://www.youtube.com/watch?v=uz2sWCnTq6E&list=PL6gx4Cwl9DGBzfXLWLSYVy8EbTdpGbUIG&index=20
+            2) https://www.youtube.com/watch?v=ScUJx4aWRi0&t=184s
 
 
 ## Penerapan Aspek OOP

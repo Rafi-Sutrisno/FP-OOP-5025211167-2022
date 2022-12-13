@@ -9,8 +9,8 @@ Final Project saya adalah sebuah sistem simpan data jual beli toko sayur. Pada s
 
 Link Youtube Demo : https://youtu.be/P4jakUEKV-s
 
-Referensi : 1) https://www.youtube.com/watch?v=uz2sWCnTq6E&list=PL6gx4Cwl9DGBzfXLWLSYVy8EbTdpGbUIG&index=20 \b
-            2) https://www.youtube.com/watch?v=ScUJx4aWRi0&t=184s
+Referensi : https://www.youtube.com/watch?v=uz2sWCnTq6E&list=PL6gx4Cwl9DGBzfXLWLSYVy8EbTdpGbUIG&index=20 
+            https://www.youtube.com/watch?v=ScUJx4aWRi0&t=184s
 
 
 ## Penerapan Aspek OOP
